@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 from numpy import disp
 
 
-plateCascade = cv2.CascadeClassifier('russian_plate.xml')
+plateCascade = cv2.CascadeClassifier('russian_plate.xml') #can use indian casacde model too
 
-def detect_plate_no(img):
+def detect_plate_no(img): #function finds the num plate from pic and returns it
     plateImg = img.copy()
     roi = img.copy()
     plateRect = plateCascade.detectMultiScale(plateImg,scaleFactor = 1.5, minNeighbors = 7)
@@ -18,29 +18,13 @@ def detect_plate_no(img):
         cv2.rectangle(plateImg,(x+2,y),(x+w-3, y+h-5),(0,255,0),3)
     return plateImg, platePart
 
-#img = cv2.imread('D:\\SUMMER PROGRAM\\tasks\\task8\\a.jpg')
-
-def display_plate_no(img):
-    img_ = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-    plt.imshow(img_)
-    plt.show()
-
-def inputImg(imgname):
+def inputImg(imgname): #function takes original pic and sends to above function
     img = cv2.imread(imgname)
     return detect_plate_no(img)
 
-#inpImg, plate = detect_plate_no(inputImg)
-#display_plate_no(inpImg)
-#display_plate_no(plate)
-
-def toText(plate):
+def toText(plate): #converts image characters to text via 'easyocr'
     reader = easyocr.Reader(['en'])
     result = reader.readtext(plate)
 
     final_result = result[0][1]
-    n=""
-    f = final_result.split('-')
-    f = n.join(f)
-    f = f.replace(" ","")
-    plate_number = f.upper()
-    return plate_number[:10]
+    return final_result[:10]
