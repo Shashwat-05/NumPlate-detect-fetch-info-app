@@ -3,13 +3,15 @@ import json,requests,xmltodict
 from werkzeug.utils import secure_filename
 import plate_model ,os
 
-app = Flask('vehicleInfo')
-UPLOAD_FOLDER = 'D:\\SUMMER PROGRAM\\tasks\\task8\\'
+app = Flask('vehicleInfo') #webapp name
+
+UPLOAD_FOLDER = '<< PATH TO FOLDER >>' #where to save the uploaded file back in server
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def vehicle_info(plate_num):
+def vehicle_info(plate_num): #fetches vehicle details via API
     rno = str(plate_num)
-    username = 'ElSid1'
+    username = '<< enter the username >>'
     r = requests.get(f"http://www.regcheck.org.uk/api/reg.asmx/CheckIndia?RegistrationNumber={rno}&username={username}")
     data = xmltodict.parse(r.content)
     in_json = json.dumps(data)
@@ -25,25 +27,16 @@ def api():
 
 @app.route('/output',methods=['POST'])
 def output():
-    #file = request.files.get('img','')
-    file = request.files['imagefile']
-    #in_num = request.args.get('number')
-
-    #if in_num == '':
-        
-    filename = secure_filename(file.filename)
-
     
-
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file = request.files['imagefile']  #gets the files via POST
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #saved file
     
     full_pic , plate_pic = plate_model.inputImg(filename)
-    pnum = plate_model.toText(plate_pic)
+    pnum = plate_model.toText(plate_pic)  # pic characters converted to text
 
-    #else:
-    pnum = 'UP25BN3162'
     
     register_info = vehicle_info(pnum)
-    return render_template('out.html',data=register_info)
+    return render_template('out.html',data=register_info) #forwards output 
 
-app.run(host="192.168.29.78", port=4321 ,debug=True)
+app.run(host="<< IP of SYSTEM >>", port=1234 ,debug=True)
