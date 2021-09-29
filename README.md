@@ -4,6 +4,6 @@ Now server contacts the API of a website to retrieve the information of that reg
 
 **Service for API is paid** 
 
-Can see the demo here : https://www.linkedin.com/posts/shashwat-pathak_flask-webapp-opencv-activity-6832006985286873088-B2ka
+Can see the [demo here](https://www.linkedin.com/posts/shashwat-pathak_flask-webapp-opencv-activity-6832006985286873088-B2ka)
 
-Connect on LinkedIN : https://www.linkedin.com/in/shashwat-pathak/
+Connect on [LinkedIN](https://www.linkedin.com/in/shashwat-pathak/)
